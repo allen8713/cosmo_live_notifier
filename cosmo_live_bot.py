@@ -102,7 +102,7 @@ def notify_live(content, live_id, url, sent_at):
         "content": (
             f"{mention}🔴 **有直播！**\n"
             f"{content}\n"
-            f"🕐 開始時間：{tw_time}（台灣時間）\n"
+            f"🕐 開始時間：{tw_time}\n"
             f"👉 快打開 Cosmo App 觀看！"
         ),
         "allowed_mentions": {"roles": [ROLE_ID] if ROLE_ID else []},

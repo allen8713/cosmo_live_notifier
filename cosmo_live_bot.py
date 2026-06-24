@@ -20,11 +20,11 @@ from datetime import datetime, timezone, timedelta
 
 TW_TZ = timezone(timedelta(hours=8))  # 台灣 GMT+8
 
-# ───────────────────────── 設定（用環境變數，別把 token 寫死進檔案）──────────────────
-COSMO_TOKEN     = os.environ["COSMO_TOKEN"]            # 你的 Bearer token（不含 "Bearer "）
-DISCORD_WEBHOOK = os.environ["DISCORD_WEBHOOK"]         # Discord 頻道 webhook URL
-ROLE_ID         = os.environ.get("ROLE_ID", "")        # 要 tag 的身分組 ID（留空則不 tag）
-ADMIN_WEBHOOK   = os.environ.get("ADMIN_WEBHOOK", DISCORD_WEBHOOK)  # token 出問題時通知你自己的頻道
+# ───────────────── 設定──────────────────
+COSMO_TOKEN     = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgyMTQ4MDAyLCJleHAiOjE3ODI3NTI4MDIsInN1YiI6IjU3NjY0MiJ9.nCva7zVzztyrzxWMg1hoCQo6GIiD2H8rL824AzE_UXQ"            # 你的 Bearer token（不含 "Bearer "）
+DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1518652491791597680/9E-fXV0-3GQNGlFGDykJ9U6qhI85G3rtIG-2CEEKLOqC-SXIvflcrwC7KBbYKeYnuGjO"         # Discord 頻道 webhook URL
+ROLE_ID         = "1518653880999739473"     # 要 tag 的身分組 ID（留空則不 tag）
+ADMIN_WEBHOOK   = "https://discord.com/api/webhooks/1518665208665608463/Wu4fSGUTbPv8FbrR85x-j0341Mku6KxL139KE6n5XdzGZ_zdz3e1xcs0R9G5u-ZADpTb"  # token 出問題時通知你自己的頻道
 
 API_URL    = "https://api.cosmo.fans/bff/v3/notification-center"
 ARTIST_ID  = "tripleS"
@@ -98,12 +98,12 @@ def to_tw_time(sent_at):
 def notify_live(content, live_id, url, sent_at):
     mention = f"<@&{ROLE_ID}> " if ROLE_ID else ""
     tw_time = to_tw_time(sent_at)
+    # url 本身是 cosmo:// 深連結，手機點了會直接開 Cosmo app 進入該直播
     body = {
         "content": (
             f"{mention}🔴 **有直播！**\n"
             f"{content}\n"
-            f"🕐 開始時間：{tw_time}\n"
-            f"👉 快打開 Cosmo App 觀看！"
+            f"開始時間：{tw_time}\n"
         ),
         "allowed_mentions": {"roles": [ROLE_ID] if ROLE_ID else []},
     }
